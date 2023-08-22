@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Modal, Portal, Text, Button, PaperProvider } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Modal, Portal, Button } from 'react-native-paper';
 import { useTheme } from 'styled-components';
 
 interface MenuOptionsProps {
