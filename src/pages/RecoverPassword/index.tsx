@@ -32,7 +32,7 @@ const RecoverPassword = () => {
       <PageLayout
         ref={webViewRef}
         androidLayerType="software"
-        source={{ uri: 'https://app.fornpay.com/recovery-password' }}
+        source={{ uri: 'https://app.unicopag.com.br/recovery-password' }}
         onNavigationStateChange={webViewMessageHandler}
         originWhitelist={['*']}
         thirdPartyCookiesEnabled={true}

@@ -6,7 +6,7 @@ import { getToken } from 'datastore/configurations';
 import parseResponseData from './parsers/ParsedResponse';
 import parseResponseError from './parsers/ParsedResponseError';
 
-const publicUrls = ['/api/auth/login', 'api/auth/refresh'];
+const publicUrls = ['api/auth/login', 'api/auth/refresh'];
 
 const getCurrentToken = async (url: string) => {
   if (!url || publicUrls.includes(url)) {

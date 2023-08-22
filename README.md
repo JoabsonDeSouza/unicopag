@@ -18,7 +18,7 @@ Este é o App da UnicoPag, projeto que foi criado com React Native CLI 0.76
 
   </div>
   <div class="column" style="margin-left: 30px">
-  <img  align="center"  alt="img"  src="./src/assets/project.png"  width="20%" />
+  <img  align="center"  alt="img"  src="./src/assets/project.jpg"  width="20%" />
 
   </div>
 </div>
@@ -128,8 +128,8 @@ post: https://onesignal.com/api/v1/notifications
 	"contents": { "en": "Descricao da mensagem", "pt": "Descricao da mensagem em portugues" },
 	"ios_sound": "unicopag.wav",
 	"android_channel_id": "ID DO CHANNEL",
-	"large_icon": "icon_notification",
-	"small_icon": "icon_notification",
+	"large_icon": "icon",
+	"small_icon": "icon",
   "accent_color": "0C0C18"
 }
 

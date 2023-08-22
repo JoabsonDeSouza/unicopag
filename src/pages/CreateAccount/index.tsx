@@ -17,7 +17,7 @@ const CreateAccount = () => {
     console.log('webViewMessageHandler', newNavState);
     const { canGoBack, url } = newNavState;
 
-    if (canGoBack || url.includes('https://app.fornpay.com/login')) {
+    if (canGoBack || url.includes('https://app.unicopag.com.br/login')) {
       navigation.goBack();
     }
   };
@@ -32,7 +32,7 @@ const CreateAccount = () => {
       <PageLayout
         ref={webViewRef}
         androidLayerType="software"
-        source={{ uri: 'https://app.fornpay.com/register' }}
+        source={{ uri: 'https://app.unicopag.com.br/register' }}
         onNavigationStateChange={webViewMessageHandler}
         originWhitelist={['*']}
         thirdPartyCookiesEnabled={true}

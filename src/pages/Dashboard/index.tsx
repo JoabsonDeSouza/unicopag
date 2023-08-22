@@ -24,7 +24,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const ImageLogo = (
   <Image
     source={logo}
-    style={{ width: 200, height: 100, resizeMode: 'contain' }}
+    style={{ width: 100, height: 50, resizeMode: 'contain' }}
   />
 );
 
@@ -57,8 +57,8 @@ const Dashboard = () => {
   const callServices = useCallback(async () => {
     try {
       const salesByRange = await getSalesByRange();
-      if (salesByRange?.current?.paid?.amount_total) {
-        setLast7days(salesByRange?.current?.paid?.amount_total);
+      if (salesByRange?.chart?.current?.paid?.amount_total) {
+        setLast7days(salesByRange?.chart?.current?.paid?.amount_total);
       }
       const result = await getBalance();
       setBalance(result);
@@ -116,7 +116,9 @@ const Dashboard = () => {
           <Avatar.Image
             size={36}
             source={
-              user.avatar ? { uri: user.avatar } : require('assets/logo.png')
+              user.avatar
+                ? { uri: user.avatar }
+                : require('assets/icon_unico.png')
             }
           />
         </TouchableOpacity>

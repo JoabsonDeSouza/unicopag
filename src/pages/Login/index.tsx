@@ -299,7 +299,7 @@ const Login = () => {
                 <TouchableOpacity
                   onPress={() =>
                     Linking.openURL(
-                      'https://www.fornpay.com/legal/politicas-de-privacidade'
+                      'https://unicodrop.com.br/termosepolitica.asp'
                     )
                   }
                   style={{
@@ -315,7 +315,9 @@ const Login = () => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                   onPress={() =>
-                    Linking.openURL('https://fornpay.com/legal/termos-de-uso')
+                    Linking.openURL(
+                      'https://unicodrop.com.br/termosepolitica.asp'
+                    )
                   }
                   style={{
                     justifyContent: 'flex-end',

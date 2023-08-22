@@ -20,15 +20,15 @@ const getGetSalesByRange = async (): Promise<SalesByRange> => {
 
   const endDate = `${year1}-${month1}-${day1}`;
 
-  return await api.post('/api/accounts/salesByRange', {
-    dateInterval: {
-      start: startDate,
-      end: endDate,
-      range: [startDate, endDate],
-    },
+  const params = {
+    'dateInterval[start]': startDate,
+    'dateInterval[end]': endDate,
+    'dateInterval[range][0]': startDate,
+    'dateInterval[range][1]': endDate,
     page: 1,
-    products: [],
-  });
+  };
+
+  return await api.get(`/api/transactions`, { params });
 };
 
 export default function useGetSalesByRange() {

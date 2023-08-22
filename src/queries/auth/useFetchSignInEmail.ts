@@ -14,7 +14,7 @@ const signInAsEmailService = async (
 ): Promise<ResponseLogin> => {
   const { email, password, remember = false } = params;
 
-  return await api.post('/api/auth/login', {
+  return await api.post('api/auth/login', {
     email: String(email),
     password: String(password),
     remember,
