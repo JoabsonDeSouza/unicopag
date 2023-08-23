@@ -144,7 +144,7 @@ OBS2: para o funcionamento correto do android, é necessário ter o android_chan
 
 #### Android
 
-📱 O arquivo para gerar a build está dentro da pasta android/app, sem a extensão .jsk, então quando for gerar, basta adicionar a extensão (unicopagjks para unicopag.jks e caso precise da private key, so mudara para private_key.pepk). As credencias estão dentro do arquivo gradle.properties
+📱 O arquivo para gerar a build está dentro da pasta android/app, então quando for gerar, basta adicionar a extensão (unicopagjks para unicopag). As credencias estão dentro do arquivo gradle.properties
 
 #### IOs
 
