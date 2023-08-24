@@ -102,7 +102,7 @@ const DrawerScreen = ({ navigation }: Props) => {
             right: 10,
             bottom: 10,
           }}>
-          <Icon name={'close'} size={30} />
+          <Icon name={'close'} size={30} color="white" />
         </ContainerClose>
       </Header>
       <ContainerUser>
@@ -120,6 +120,7 @@ const DrawerScreen = ({ navigation }: Props) => {
               style={{ position: 'absolute', right: 0 }}
               name={'arrow-drop-down'}
               size={25}
+              color="white"
             />
           </CompanyItem>
         </CompaniesCard>
@@ -141,10 +142,14 @@ const DrawerScreen = ({ navigation }: Props) => {
             renderItem={({ item }: any) => (
               <CompanyItem onPress={() => handleClickItem(item)}>
                 <CompanyName style={{ marginRight: 10 }} numberOfLines={1}>
-                  {item.title}
+                  {item.title.length > 20
+                    ? `${item.title.substring(0, 20)}...`
+                    : item.title}
                 </CompanyName>
 
-                {item.checked && <Icon name={'check'} size={25} />}
+                {item.checked && (
+                  <Icon name={'check'} size={25} color="white" />
+                )}
               </CompanyItem>
             )}
           />

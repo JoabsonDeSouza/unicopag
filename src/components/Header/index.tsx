@@ -24,8 +24,11 @@ const Header = ({ hideMenu }: Props) => {
   return (
     <Container>
       {!hideMenu && (
-        <IconContainer onPress={handlerDrawer} activeOpacity={0.85}>
-          <Menu name="menu" size={30} />
+        <IconContainer
+          onPress={handlerDrawer}
+          activeOpacity={0.85}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+          <Menu name="menu" size={30} color="white" />
         </IconContainer>
       )}
 

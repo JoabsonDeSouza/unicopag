@@ -97,11 +97,12 @@ export const CompanyName = styled.Text`
   line-height: 26px;
   color: ${(props: { theme: { colors: { white: any } } }) =>
     props.theme.colors.white};
+  text-align: center;
 `;
 
 export const CompanyItem = styled.TouchableOpacity`
   flex-direction: row;
-  width: 90%;
+  width: 100%;
   height: 45px;
   align-items: center;
   justify-content: center;
