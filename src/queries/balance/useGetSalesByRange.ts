@@ -3,7 +3,13 @@ import { useMutation } from '@tanstack/react-query';
 import { SalesByRange } from 'model/salesByRange';
 import api from 'services/api';
 
-const getGetSalesByRange = async (): Promise<SalesByRange> => {
+export type DataToGetTransactions = {
+  idStore: string;
+};
+
+const getGetTransactionsByRange = async (
+  dataParams: DataToGetTransactions
+): Promise<SalesByRange> => {
   const dateMinor7Days = new Date();
   dateMinor7Days.setDate(dateMinor7Days.getDate() - 7);
 
@@ -28,9 +34,15 @@ const getGetSalesByRange = async (): Promise<SalesByRange> => {
     page: 1,
   };
 
-  return await api.get(`/api/transactions`, { params });
+  const config = {
+    headers: {
+      Store: dataParams.idStore,
+    },
+  };
+
+  return await api.get(`/api/transactions`, { params: params, ...config });
 };
 
-export default function useGetSalesByRange() {
-  return useMutation(getGetSalesByRange);
+export default function useGetTransactionsByRange() {
+  return useMutation(getGetTransactionsByRange);
 }

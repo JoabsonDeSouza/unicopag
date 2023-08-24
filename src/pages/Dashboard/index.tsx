@@ -1,16 +1,14 @@
 import useGetBalance from 'queries/balance/useGetBalance';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
-import { Text, Card, Avatar } from 'react-native-paper';
-import useUserStore from 'store/user/useUserStore';
+import { Text, Card } from 'react-native-paper';
 
 import { Container, ContainerValues, CardIcon } from './styles';
-import { Image, StatusBar, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { Balance } from 'model/balance';
 import Loading from 'components/Loading';
 import { formatValueByCurrency } from 'utils/utils';
-import useGetSalesByRange from 'queries/balance/useGetSalesByRange';
-import logo from 'assets/logo.png';
+import useGetTransactionsByRange from 'queries/balance/useGetSalesByRange';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import useFetchRefreshToken from 'queries/auth/useFetchRefreshToken';
@@ -18,24 +16,17 @@ import { useJwtTokenStore } from 'store/settings';
 import { useNavigation } from '@react-navigation/native';
 import { AUTH } from 'routes/screenNames';
 import { NavigationProps } from 'routes/types';
-import MenuOptions from 'components/MenuOptions';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
-const ImageLogo = (
-  <Image
-    source={logo}
-    style={{ width: 100, height: 50, resizeMode: 'contain' }}
-  />
-);
+import Header from 'components/Header';
+import useStores from 'store/stores/useStores';
+import useGetStores from 'queries/stores/useGetStores';
+import { Store } from 'model/store';
 
 const Dashboard = () => {
   const refreshTry = useRef<number>(0);
   const navigation = useNavigation<NavigationProps<''>>();
 
-  const user = useUserStore((store) => store.user);
   const theme = useTheme();
 
-  const [visible, setVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [last7days, setLast7days] = useState<number>(0);
   const [balance, setBalance] = useState<Balance>({
@@ -45,23 +36,27 @@ const Dashboard = () => {
   });
 
   const { mutateAsync: getBalance } = useGetBalance();
-  const { mutateAsync: getSalesByRange } = useGetSalesByRange();
+  const { mutateAsync: getTransactionsByRange } = useGetTransactionsByRange();
   const { mutateAsync: refreshToken } = useFetchRefreshToken();
+  const { mutateAsync: getStores } = useGetStores();
 
   const { setJwtToken } = useJwtTokenStore((store) => store);
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
+  const { setStores, setCurrentStore, currentStore } = useStores(
+    (store) => store
+  );
 
   const callServices = useCallback(async () => {
     try {
-      const salesByRange = await getSalesByRange();
+      const result = await getBalance();
+      setBalance(result);
+
+      const salesByRange = await getTransactionsByRange({
+        idStore: `${currentStore?.id || ''}`,
+      });
+
       if (salesByRange?.chart?.current?.paid?.amount_total) {
         setLast7days(salesByRange?.chart?.current?.paid?.amount_total);
       }
-      const result = await getBalance();
-      setBalance(result);
 
       setTimeout(() => setLoading(false), 300);
     } catch (error: any) {
@@ -89,56 +84,30 @@ const Dashboard = () => {
     navigation.replace(AUTH);
   };
 
+  const callStores = async () => {
+    const stores = await getStores();
+    setStores(stores);
+    const store: Store = { ...stores[0], checked: true };
+    setCurrentStore(store);
+  };
+
   useEffect(() => {
-    callServices();
+    callStores();
   }, []);
+
+  useEffect(() => {
+    if (currentStore) {
+      setLoading(true);
+      callServices();
+    }
+  }, [currentStore]);
 
   return (
     <Container>
       <StatusBar backgroundColor={theme.colors.background} />
       {loading && <Loading />}
 
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        {ImageLogo}
-
-        <TouchableOpacity
-          onPress={openMenu}
-          style={{
-            alignContent: 'flex-end',
-            width: 50,
-          }}>
-          <Avatar.Image
-            size={36}
-            source={
-              user.avatar
-                ? { uri: user.avatar }
-                : require('assets/icon_unico.png')
-            }
-          />
-        </TouchableOpacity>
-      </View>
-
-      <View
-        style={{
-          marginVertical: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text
-          variant="titleLarge"
-          style={{
-            alignSelf: 'center',
-            color: theme.colors.white,
-          }}>{`Olá, ${
-          user.name ? user.name.split(' ')[0] : 'Visitante'
-        }`}</Text>
-      </View>
+      <Header />
 
       <Card
         style={{
@@ -227,12 +196,6 @@ const Dashboard = () => {
           </View>
         </ContainerValues>
       </Card>
-
-      <MenuOptions
-        visible={visible}
-        closeMenu={closeMenu}
-        handleExit={logout}
-      />
     </Container>
   );
 };

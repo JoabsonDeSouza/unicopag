@@ -1,16 +1,19 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import * as PAGES from 'pages';
 import { useCallback } from 'react';
 import { StatusBar, Platform } from 'react-native';
 
 import * as screens from './screenNames';
-import Splash from '../pages/Splash';
+import DrawerScreen from 'routes/Drawer';
 
 const RootStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 const InitialStack = createStackNavigator();
 const MainStack = createStackNavigator();
+const DrawerStack = createDrawerNavigator();
 
 function MainStackScreen() {
   return (
@@ -21,6 +24,26 @@ function MainStackScreen() {
         options={{ gestureEnabled: false }}
       />
     </MainStack.Navigator>
+  );
+}
+
+function Drawer() {
+  return (
+    <DrawerStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      drawerContent={(props) => <DrawerScreen {...props} />}>
+      <DrawerStack.Screen
+        name={screens.HOME}
+        component={MainStackScreen}
+        options={{
+          sceneContainerStyle: {
+            backgroundColor: 'red',
+          },
+        }}
+      />
+    </DrawerStack.Navigator>
   );
 }
 
@@ -61,7 +84,7 @@ function InitialStackScreen() {
 
       <InitialStack.Screen
         name={screens.MAIN}
-        component={MainStackScreen}
+        component={Drawer}
         options={{ gestureEnabled: false }}
       />
     </InitialStack.Navigator>

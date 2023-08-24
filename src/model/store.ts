@@ -1,0 +1,35 @@
+export interface Store {
+  id: number;
+  account_id: number;
+  gateway_id?: number;
+  hash: string;
+  title: string;
+  description: any;
+  logo?: string;
+  slug: any;
+  domain?: string;
+  checkout_domain?: string;
+  myshopify_domain?: string;
+  shopify_slug?: string;
+  status: number;
+  document?: string;
+  email?: string;
+  phone_number: any;
+  legal_name?: string;
+  street_name?: string;
+  street_number?: string;
+  complement: any;
+  neighborhood?: string;
+  city?: string;
+  state?: string;
+  zip_code?: string;
+  discount_creditcard?: number;
+  discount_pix?: number;
+  discount_billet?: number;
+  gateway_creditcard?: number;
+  gateway_pix?: number;
+  gateway_billet?: number;
+  created_at?: string;
+  updated_at: string;
+  checked?: boolean;
+}

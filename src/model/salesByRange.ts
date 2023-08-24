@@ -13,6 +13,7 @@ export interface SalesByRange {
   prev_page_url: any;
   to: number;
   total: number;
+  id?: string;
 }
 
 export interface Chart {
@@ -53,7 +54,7 @@ export interface Pending {
 export interface Daum {
   created_at: string;
   refuse_reason?: string;
-  id: number;
+  id?: number;
   customer_id: number;
   hash: string;
   payment_method: number;
@@ -80,7 +81,7 @@ export interface Daum {
 }
 
 export interface ShopifyOrder {
-  id: number;
+  id?: number;
   account_id: number;
   store_id: number;
   transaction_id: number;
@@ -122,14 +123,14 @@ export interface ShopifyOrder {
 }
 
 export interface Customer {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   phone_number: string;
 }
 
 export interface Item {
-  id: number;
+  id?: number;
   hash: string;
   product_id: number;
   transaction_id: number;
@@ -138,7 +139,7 @@ export interface Item {
 }
 
 export interface Product {
-  id: number;
+  id?: number;
   shopify_id: number;
   hash: string;
   title: string;
@@ -147,7 +148,7 @@ export interface Product {
 }
 
 export interface SplitRecipient {
-  id: number;
+  id?: number;
   transaction_id: number;
   recipient_id?: number;
   amount: string;
@@ -156,7 +157,7 @@ export interface SplitRecipient {
 }
 
 export interface Recipient {
-  id: number;
+  id?: number;
   account_id: number;
   recipient_id: string;
   name: string;
