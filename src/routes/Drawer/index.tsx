@@ -77,7 +77,6 @@ const DrawerScreen = ({ navigation }: Props) => {
   };
 
   const handleClickItem = (itemClicked: Store) => {
-    setCurrentStore(itemClicked);
     const updateList: any = stores.map((item) => {
       return {
         ...item,
@@ -86,6 +85,8 @@ const DrawerScreen = ({ navigation }: Props) => {
     });
 
     setStores(updateList);
+    setCurrentStore(itemClicked);
+
     setExpanded(false);
     handlerDrawer();
   };

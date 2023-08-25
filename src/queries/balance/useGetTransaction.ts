@@ -1,6 +1,6 @@
 /* eslint-disable no-return-await */
 import { useMutation } from '@tanstack/react-query';
-import { SalesByRange } from 'model/salesByRange';
+import { Transaction } from 'model/transaction';
 import api from 'services/api';
 
 export type DataToGetTransactions = {
@@ -9,7 +9,7 @@ export type DataToGetTransactions = {
 
 const getGetTransactionsByRange = async (
   dataParams: DataToGetTransactions
-): Promise<SalesByRange> => {
+): Promise<Transaction> => {
   const dateMinor7Days = new Date();
   dateMinor7Days.setDate(dateMinor7Days.getDate() - 7);
 
@@ -34,13 +34,14 @@ const getGetTransactionsByRange = async (
     page: 1,
   };
 
-  const config = {
+  return await api.get(`/api/transactions`, {
+    params: {
+      ...params,
+    },
     headers: {
       Store: dataParams.idStore,
     },
-  };
-
-  return await api.get(`/api/transactions`, { params: params, ...config });
+  });
 };
 
 export default function useGetTransactionsByRange() {

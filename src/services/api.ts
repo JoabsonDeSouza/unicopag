@@ -35,8 +35,8 @@ api.interceptors.request.use(
 
     console.log('>>>>> interceptor: ', {
       url: config.url,
-      params: config.data,
-      token: config.headers.Authorization,
+      params: config.params,
+      headers: config.headers,
     });
 
     return config;

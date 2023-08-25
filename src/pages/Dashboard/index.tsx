@@ -8,7 +8,7 @@ import { StatusBar, View } from 'react-native';
 import { Balance } from 'model/balance';
 import Loading from 'components/Loading';
 import { formatValueByCurrency } from 'utils/utils';
-import useGetTransactionsByRange from 'queries/balance/useGetSalesByRange';
+import useGetTransactionsByRange from 'queries/balance/useGetTransaction';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import useFetchRefreshToken from 'queries/auth/useFetchRefreshToken';
@@ -24,6 +24,7 @@ import { Store } from 'model/store';
 const Dashboard = () => {
   const refreshTry = useRef<number>(0);
   const navigation = useNavigation<NavigationProps<''>>();
+  const currentHash = useRef<string>('');
 
   const theme = useTheme();
 
@@ -46,19 +47,38 @@ const Dashboard = () => {
   );
 
   const callServices = useCallback(async () => {
+    if (!currentHash.current) return;
+
     try {
       const result = await getBalance();
       setBalance(result);
 
-      const salesByRange = await getTransactionsByRange({
-        idStore: `${currentStore?.id || ''}`,
+      const transaction = await getTransactionsByRange({
+        idStore: `${currentHash.current}`,
       });
 
-      if (salesByRange?.chart?.current?.paid?.amount_total) {
-        setLast7days(salesByRange?.chart?.current?.paid?.amount_total);
+      if (transaction?.chart?.current?.paid?.amount_total) {
+        setLast7days(transaction?.chart?.current?.paid?.amount_total);
       }
 
       setTimeout(() => setLoading(false), 300);
+    } catch (error) {
+      setLoading(false);
+    }
+  }, [balance]);
+
+  const logout = () => {
+    setJwtToken('');
+    navigation.replace(AUTH);
+  };
+
+  const callStores = async () => {
+    try {
+      const stores = await getStores();
+      setStores(stores);
+
+      const store: Store = { ...stores[0], checked: true };
+      setCurrentStore(store);
     } catch (error: any) {
       if (
         refreshTry.current === 0 &&
@@ -69,7 +89,7 @@ const Dashboard = () => {
         const newToken = await refreshToken();
         setJwtToken(newToken);
 
-        setTimeout(() => callServices(), 100);
+        setTimeout(async () => await callStores(), 100);
       } else {
         if (refreshTry.current === 1) {
           logout();
@@ -77,18 +97,6 @@ const Dashboard = () => {
         setLoading(false);
       }
     }
-  }, [balance]);
-
-  const logout = () => {
-    setJwtToken('');
-    navigation.replace(AUTH);
-  };
-
-  const callStores = async () => {
-    const stores = await getStores();
-    setStores(stores);
-    const store: Store = { ...stores[0], checked: true };
-    setCurrentStore(store);
   };
 
   useEffect(() => {
@@ -96,8 +104,10 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (currentStore) {
+    if (currentStore?.hash) {
       setLoading(true);
+
+      currentHash.current = currentStore?.hash;
       callServices();
     }
   }, [currentStore]);
