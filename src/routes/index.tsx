@@ -8,6 +8,7 @@ import { StatusBar, Platform } from 'react-native';
 
 import * as screens from './screenNames';
 import DrawerScreen from 'routes/Drawer';
+import Profile from 'pages/Profile';
 
 const RootStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -34,15 +35,8 @@ function Drawer() {
         headerShown: false,
       }}
       drawerContent={(props) => <DrawerScreen {...props} />}>
-      <DrawerStack.Screen
-        name={screens.HOME}
-        component={MainStackScreen}
-        options={{
-          sceneContainerStyle: {
-            backgroundColor: 'red',
-          },
-        }}
-      />
+      <DrawerStack.Screen name={screens.HOME} component={MainStackScreen} />
+      <DrawerStack.Screen name={screens.PROFILE} component={Profile} />
     </DrawerStack.Navigator>
   );
 }

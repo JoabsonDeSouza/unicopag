@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import ENV from 'config/environmentVariables';
 import { useState, useEffect } from 'react';
-import { Platform } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import { useUserStore } from 'store/user';
 

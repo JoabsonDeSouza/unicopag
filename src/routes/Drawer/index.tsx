@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import logoIcon from 'assets/icon_unico.png';
 import Button from 'components/Button';
 import { User } from 'model/user';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
 import { DrawerItemProps } from 'routes/Drawer/types';
 import { AUTH } from 'routes/screenNames';
