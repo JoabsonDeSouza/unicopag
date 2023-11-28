@@ -19,3 +19,11 @@ export const Image = styled.Image`
   margin-bottom: 40px;
   width: 100%;
 `;
+
+export const BackIcon = styled.Pressable`
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 15px;
+  top: 10%;
+`;

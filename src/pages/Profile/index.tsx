@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Container, ContainerItems } from './styles';
+import { Container, ContainerItems, BackIcon } from './styles';
 import {
   Text,
   Avatar,
@@ -68,18 +68,28 @@ const Profile: React.FC = () => {
         <Loading />
       ) : (
         <Container>
+          <BackIcon onPress={() => navigation.goBack()}>
+            <Icon name="chevron-left" size={40} color="white" />
+          </BackIcon>
           <Avatar.Image
             source={image}
             size={100}
             style={{ alignSelf: 'center' }}
           />
           <Text
-            style={{ marginTop: 30, marginBottom: 25, alignSelf: 'center' }}
+            style={{
+              marginTop: 30,
+              marginBottom: 25,
+              alignSelf: 'center',
+              color: 'white',
+            }}
             variant="headlineMedium">
             Meu Perfil
           </Text>
           <ContainerItems>
-            <Text variant="titleMedium">Nome</Text>
+            <Text variant="titleMedium" style={{ color: 'white' }}>
+              Nome
+            </Text>
             <TextInput
               label={name}
               placeholder="Nome"
@@ -93,7 +103,9 @@ const Profile: React.FC = () => {
               textColor="white"
             />
 
-            <Text variant="titleMedium">Email</Text>
+            <Text variant="titleMedium" style={{ color: 'white' }}>
+              Email
+            </Text>
             <TextInput
               label={user.email}
               placeholder="Email"
@@ -107,7 +119,10 @@ const Profile: React.FC = () => {
               textColor="white"
             />
 
-            <Button style={{ marginTop: '10%' }} onPress={showModal}>
+            <Button
+              style={{ marginTop: 50, width: 160, alignSelf: 'center' }}
+              textColor="white"
+              onPress={showModal}>
               Deletar Conta?
             </Button>
           </ContainerItems>
